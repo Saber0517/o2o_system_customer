@@ -1,0 +1,26 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" build-on-make="true" name="week4_weekly_o2o_system_customer:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/week4_weekly_o2o_system_customer_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="week4_weekly_o2o_system_customer/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="week4_weekly_o2o_system_customer" />
+          <element id="module-output" name="o2o_system_core" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="jstl-1.2" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.3.1" />
+          <element id="library" level="project" name="Maven: commons-dbcp:commons-dbcp:1.4" />
+          <element id="library" level="project" name="Maven: commons-pool:commons-pool:1.5.4" />
+          <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-api:2.3" />
+          <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-core:2.3" />
+          <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.2.2" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
+          <element id="library" level="project" name="ojdbc6-11.2.0.4" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="week4_weekly_o2o_system_customer/web/Web" />
+    </root>
+  </artifact>
+</component>

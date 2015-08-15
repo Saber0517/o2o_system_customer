@@ -28,22 +28,40 @@
 
 
     <script type="text/javascript">
-        $(function(){
-            $(".dropdown.active").toggleClass("open",true);
-            $(".dropdown").on("click",function(){
-                $(".dropdown").toggleClass("open",true);
+        $(function () {
+            //the button on navi-bar
+            $(".dropdown.active").toggleClass("open", true);
+            $(".dropdown").on("click", function () {
+                $(".dropdown").toggleClass("open", true);
             });
-            $(".dropdown.active").on("hide.bs.dropdown",function(e) {
-                $(".dropdown").toggleClass("active",false);
+            $(".dropdown.active").on("hide.bs.dropdown", function (e) {
+                $(".dropdown").toggleClass("active", false);
                 return true;
             });
         });
+
+
         $(document).ready(function () {
             //init datatable
             $('.dataTable').DataTable({
                 "columns": [
                     null, null, null, null, null, {"orderable": false}
                 ]
+            });
+            var foodTable = $('.dataTable').DataTable();
+
+            $(".tableButton").on("click", function () {
+                var $btn = $(this).button('loading')
+
+                var tr = $(this).closest('tr')[0];
+                var targetTd = $(tr,"[name='foodID']")[0];
+                var foodID = tr.children[0].innerHTML;
+                console.log("foodID:   "+foodID);
+                // business logic...
+                jQuery.get("/FoodTypeServlet",{},function(data){
+                    console.log(data.foodTypeMap);
+                    $btn.button('reset');
+                });
             });
         });
 
@@ -61,7 +79,8 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav" data-hover="dropdown">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav"
+                    data-hover="dropdown">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>main
@@ -116,10 +135,13 @@
                 <tbody>
                 <c:forEach items="${resultList}" var="foodTypeItem">
                     <tr>
-                        <td>${foodTypeItem.foodID}</td>
+                        <td name="foodID">${foodTypeItem.foodID}</td>
                         <td>${foodTypeItem.foodName}</td>
                         <td>${foodTypeItem.price}</td>
-                        <td><div class=""><img src="../File?filename=${foodTypeItem.pictureURL}" style="width:60%" class="img-rounded img-responsive"></div></td>
+                        <td>
+                            <div class=""><img src="../File?filename=${foodTypeItem.pictureURL}" style="width:60%"
+                                               class="img-rounded img-responsive"></div>
+                        </td>
                             <%--<td>${foodTypeItem.pictureURL}</td>--%>
                         <td>
                             <c:forEach items="${statusEntityList}" var="statusItem">
@@ -133,9 +155,10 @@
                             </c:forEach>
                         </td>
                         <td>
-                            <a href="../UpdataFoodServlet?foodId=${foodTypeItem.foodID}&price=${foodTypeItem.price}&update=false">update</a>&emsp;
-                            <a href="../DeleteFoodSerlvet?foodId=${foodTypeItem.foodID}"
-                               onclick="return confirm('Delete this item?')">delete</a>
+                            <button type="button" data-loading-text="Loading..." class="btn btn-primary tableButton"
+                                    autocomplete="off">
+                                add to car
+                            </button>
                         </td>
                     </tr>
                 </c:forEach>

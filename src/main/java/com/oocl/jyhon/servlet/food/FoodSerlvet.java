@@ -36,9 +36,9 @@ public class FoodSerlvet extends HttpServlet {
         if (null != typeID) {
             request.setAttribute("currentFoodTypeId", typeID);
         }
-
-        request.getRequestDispatcher("main/Food.jsp").forward(request, response);
-        return;
+        response.sendRedirect("main/Food.jsp");
+//        request.getRequestDispatcher("main/Food.jsp").forward(request, response);
+//        return;
 
     }
 
@@ -68,7 +68,7 @@ public class FoodSerlvet extends HttpServlet {
         List<FoodEntity> resultList = new LinkedList<FoodEntity>();
         String requestUrl = request.getRequestURI();
         resultList = foodEntityList;
-        request.setAttribute("resultList", resultList);
+        request.getSession().setAttribute("resultList", resultList);
         System.out.println(requestUrl);
     }
 

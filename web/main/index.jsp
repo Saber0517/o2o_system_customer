@@ -5,7 +5,19 @@
 <head>
     <meta charset="UTF-8">
     <title>SMS - home</title>
-    <link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!--<script src="/js/jquery-1.11.3.min.js"></script>-->
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/js/databuffer.js"></script>
     <style>
         nav.navbar i {
             width: 30px;
@@ -30,15 +42,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Food <span
                             class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <c:forEach items="${foodTypeEntityList}" var="foodTypeItem">
-                            <li><a href="../FoodSerlvet?typeID=${foodTypeItem.foodTypeID}"><i class="glyphicon glyphicon-cutlery"></i>${foodTypeItem.foodTypeName}
-                            </a></li>
-                            <!--<li><a href="mainCourse.jsp"><i class="glyphicon glyphicon-cutlery"></i>Main course</a></li>-->
-                        </c:forEach>
-                        <!--<li><a href="mainCourse.jsp"><i class="glyphicon glyphicon-cutlery"></i>Main course</a></li>
-                    <li><a href="sideDishes.jsp"><i class="glyphicon glyphicon-leaf"></i>Side dishes</a></li>
-                    <li><a href="drink.jsp"><i class="glyphicon glyphicon-glass"></i>Drink</a></li>-->
+                    <ul id="foodList" class="dropdown-menu">
                         <li role="separator" class="divider"></li>
                         <li><a href="newFood.jsp"><i class="glyphicon glyphicon-plus"></i>New</a></li>
                     </ul>
@@ -64,8 +68,7 @@
         </div>
     </div>
 </div>
-<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

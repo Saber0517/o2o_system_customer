@@ -4,7 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <title>SMS - main course</title>
-    <link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="/DataTables/datatables.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script type="text/javascript" src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript" src="/js/databuffer.js"></script>
+
+
+    <script type="text/javascript">
+        $(function(){
+            $(".dropdown.active").toggleClass("open",true);
+            $(".dropdown").on("click",function(){
+                $(".dropdown").toggleClass("open",true);
+            });
+            $(".dropdown.active").on("hide.bs.dropdown",function(e) {
+                $(".dropdown").toggleClass("active",false);
+                return true;
+            });
+        });
+        $(document).ready(function () {
+            //init datatable
+            $('.dataTable').DataTable({
+                "columns": [
+                    null, null, null, null, null, {"orderable": false}
+                ]
+            });
+        });
+
+
+    </script>
     <style>
         nav.navbar i {
             width: 30px;
@@ -17,25 +61,19 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav" data-hover="dropdown">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>main
             </button>
-            <a class="navbar-brand" href="index.jsp">SMS</a>
+            <a class="navbar-brand" href="index.html">SMS</a>
         </div>
         <div class="collapse navbar-collapse" id="main-nav">
             <ul class="nav navbar-nav">
                 <li class="dropdown active">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Food <span
                             class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <c:forEach items="${foodTypeEntityList}" var="foodTypeItem">
-                            <li><a href="/FoodSerlvet?typeID=${foodTypeItem.foodTypeID}"><i
-                                    class="glyphicon glyphicon-cutlery"></i>${foodTypeItem.foodTypeName}
-                            </a></li>
-                            <!--<li><a href="mainCourse.jsp"><i class="glyphicon glyphicon-cutlery"></i>Main course</a></li>-->
-                        </c:forEach>
+                    <ul id="foodList" class="dropdown-menu">
                         <li role="separator" class="divider"></li>
                         <li><a href="main/newFood.jsp"><i class="glyphicon glyphicon-plus"></i>New</a></li>
                     </ul>
@@ -45,10 +83,10 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                       role="button">${currentUser.userName} <span
+                       role="button"> <span
                             class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="../login.jsp"><i class="glyphicon glyphicon-log-out"></i>&emsp;Logout</a></li>
+                        <li><a href="../login.html"><i class="glyphicon glyphicon-log-out"></i>&emsp;Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -59,12 +97,12 @@
     <div class="row">
         <div class="col-xs-12">
             <ol class="breadcrumb">
-                <li><a href="index.jsp">Home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li class="active">${currentFoodTypeName}</li>
             </ol>
             <span class="text-danger">${ErrorMessage}</span>
             <span class="text-success">${SuccessMessage}</span>
-            <table class="table table-hover">
+            <table id="foodTable" class="table table-hover dataTable">
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -81,7 +119,8 @@
                         <td>${foodTypeItem.foodID}</td>
                         <td>${foodTypeItem.foodName}</td>
                         <td>${foodTypeItem.price}</td>
-                        <td>${foodTypeItem.pictureURL}</td>
+                        <td><div class=""><img src="../File?filename=${foodTypeItem.pictureURL}" style="width:60%" class="img-rounded img-responsive"></div></td>
+                            <%--<td>${foodTypeItem.pictureURL}</td>--%>
                         <td>
                             <c:forEach items="${statusEntityList}" var="statusItem">
                                 <c:choose>
@@ -100,33 +139,11 @@
                         </td>
                     </tr>
                 </c:forEach>
-
                 </tbody>
             </table>
-            <nav class="text-right">
-                <ul class="pagination">
-                    <li>
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li>
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         </div>
     </div>
 </div>
-<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
 
 </html>

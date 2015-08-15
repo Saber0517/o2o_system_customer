@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/../week4_weekly_o2o_system_admin/src/test/java/jms/ConsumerFrame.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/oocl/jyhon/filter/EncodingFilter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/oocl/jyhon/servlet/user/LoginServlet.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/oocl/jyhon/servlet/user/SignInServlet.java" charset="UTF-8" />

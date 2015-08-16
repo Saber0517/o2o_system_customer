@@ -54,13 +54,49 @@
                 var $btn = $(this).button('loading')
 
                 var tr = $(this).closest('tr')[0];
-                var targetTd = $(tr,"[name='foodID']")[0];
+                var targetTd = $(tr, "[name='foodID']")[0];
                 var foodID = tr.children[0].innerHTML;
-                console.log("foodID:   "+foodID);
+                console.log("foodID:   " + foodID);
                 // business logic...
-                jQuery.get("/FoodTypeServlet",{},function(data){
-                    console.log(data.foodTypeMap);
-                    $btn.button('reset');
+
+                $.ajax({
+                    url: '/AddOrderServlet',
+                    type: 'GET',
+                    data: {
+                        "json": JSON.stringify({
+                            "foodId": foodID
+                        })
+                    },
+                    dataType: 'json',
+                    complete: function (data) {
+                        var jsonResult = $.parseJSON(data.responseText);
+                        var result = jsonResult["insert"];
+                        console.log("result: " + result);
+                        console.log("orderId: " + jsonResult.orderId);
+                        $btn.attr("data-container", "body");
+                        $btn.attr("data-toggle", "popover");
+                        $btn.attr("data-placement", "left");
+
+                        var resultTip = "";
+                        if (result == "success") {
+                            resultTip = "add to chart success";
+                        } else {
+                            resultTip = "add to chart failed, please contact us.!";
+                        }
+                        $btn.attr("data-content", resultTip);
+                        setTimeout(function () {
+                            $btn.button('reset');
+                            $btn.popover('show');
+                            setTimeout(function () {
+                                $btn.popover('hide');
+                                $btn.removeAttr("data-content");
+                                $btn.removeAttr("data-container");
+                                $btn.removeAttr("data-toggle");
+                                $btn.removeAttr("data-placement");
+                            }, 3000);
+                        }, 2000);
+
+                    }
                 });
             });
         });

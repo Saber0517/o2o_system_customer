@@ -8,11 +8,14 @@ import com.oocl.jyhon.service.OrderService;
 import com.oocl.jyhon.serviceimpl.OrderServiceImpl;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,9 +27,11 @@ import java.util.List;
 public class AddOrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String json = request.getParameter("json");
+
         if (null == json) {
             return;
         }
+
 
         List<OrderEntity> orderEntityList = (List<OrderEntity>) request.getSession().getAttribute("orderEntityList");
         if (null == orderEntityList) {
@@ -38,6 +43,13 @@ public class AddOrderServlet extends HttpServlet {
         OrderEntity orderEntity = gson.fromJson(json, OrderEntity.class);
         //date 要以serer目前的时间为主
         orderEntity.setDate(new Date());
+        //设置为审核状态
+        orderEntity.setStatusId(3);
+        //for test orderCount set to 1
+        orderEntity.setOrderCount(1);
+        //for test userID set 33
+        orderEntity.setUserID(33);
+
         OrderService orderService = new OrderServiceImpl();
         final Integer result = orderService.addOrder(orderEntity);
 

@@ -137,8 +137,8 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                       role="button"> <span
+                    <a href="#" id="username" class="dropdown-toggle" data-toggle="dropdown"
+                       role="button">userName<span
                             class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="../login.html"><i class="glyphicon glyphicon-log-out"></i>&emsp;Logout</a></li>

@@ -24,8 +24,6 @@ public class PanelServlet extends HttpServlet {
         //foodType
         FoodTypeEntityService foodTypeEntityService = new FoodTypeEntityServiceImpl();
         List<FoodTypeEntity> foodTypeEntityList = foodTypeEntityService.findAll();
-
-
         request.getSession().setAttribute("foodTypeEntityList", foodTypeEntityList);
 
         //status

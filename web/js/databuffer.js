@@ -26,13 +26,32 @@ $(document).ready(function () {
     var userEntity = bodyHtml.data("userEntity");
     if (typeof(userEntity) == "undefined") {
         jQuery.get("/GetUserDataServlet", {}, function (data) {
+            console.log(data);
             console.log("userName: " + data.userName);
             bodyHtml.data("userEntity", data);
             setUserName();
+            getOrder(data.userID);
         });
     } else {
         setUserName();
+        getOrder(userEntity.userID);
     }
+
+    function getOrder(userID) {
+        var orderEntitys = bodyHtml.data("orderEntity");
+        if (typeof(orderEntitys) == "undefined") {
+            jQuery.get("/GetOrderServlet", {"userID": userID}, function (data) {
+                console.log(data);
+                //console.log("userName: " + data.userName);
+                bodyHtml.data("orderEntity", data);
+
+                //
+            });
+        } else {
+            ///
+        }
+    }
+
 
     function setUserName() {
         var bodyHtml = $("body");

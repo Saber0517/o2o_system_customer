@@ -136,6 +136,7 @@
                 <li><a href="PackageServlet">Package</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li><span id="numberCount" class="badge" style="margin: 15px">number of food</span></li>
                 <li class="dropdown">
                     <a href="#" id="username" class="dropdown-toggle" data-toggle="dropdown"
                        role="button">userName<span

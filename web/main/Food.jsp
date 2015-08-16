@@ -29,6 +29,9 @@
 
     <script type="text/javascript">
         $(function () {
+            //init
+            setShoppingChart();
+
             //the button on navi-bar
             $(".dropdown.active").toggleClass("open", true);
             $(".dropdown").on("click", function () {
@@ -50,15 +53,17 @@
             });
             var foodTable = $('.dataTable').DataTable();
 
+
             $(".tableButton").on("click", function () {
+                //add food into car
                 var $btn = $(this).button('loading')
 
                 var tr = $(this).closest('tr')[0];
                 var targetTd = $(tr, "[name='foodID']")[0];
                 var foodID = tr.children[0].innerHTML;
                 console.log("foodID:   " + foodID);
-                // business logic...
 
+                //submit
                 $.ajax({
                     url: '/AddOrderServlet',
                     type: 'GET',
@@ -80,6 +85,7 @@
                         var resultTip = "";
                         if (result == "success") {
                             resultTip = "add to chart success";
+
                         } else {
                             resultTip = "add to chart failed, please contact us.!";
                         }
@@ -88,6 +94,7 @@
                             $btn.button('reset');
                             $btn.popover('show');
                             setTimeout(function () {
+                                setShoppingChart();
                                 $btn.popover('hide');
                                 $btn.removeAttr("data-content");
                                 $btn.removeAttr("data-container");
@@ -99,6 +106,8 @@
                     }
                 });
             });
+
+
         });
 
 
@@ -136,13 +145,18 @@
                 <li><a href="PackageServlet">Package</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><span id="numberCount" class="badge" style="margin: 15px">number of food</span></li>
+                <li>
+                    <button id="shopperChart" class="btn btn-primary" type="button" style="margin-top:5px">
+                        Paying the Bill
+                        <span id="numberCount" class="badge" >number of food</span>
+                    </button>
+                </li>
                 <li class="dropdown">
                     <a href="#" id="username" class="dropdown-toggle" data-toggle="dropdown"
                        role="button">userName<span
                             class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="../login.html"><i class="glyphicon glyphicon-log-out"></i>&emsp;Logout</a></li>
+                        <li><a href="../login.jsp"><i class="glyphicon glyphicon-log-out"></i>&emsp;Logout</a></li>
                     </ul>
                 </li>
             </ul>

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.oocl.jyhon.entiy.FoodTypeEntity;
 import com.oocl.jyhon.entiy.OrderEntity;
+import com.oocl.jyhon.entiy.UserEntity;
 import com.oocl.jyhon.service.OrderService;
 import com.oocl.jyhon.serviceimpl.OrderServiceImpl;
 
@@ -47,8 +48,11 @@ public class AddOrderServlet extends HttpServlet {
         orderEntity.setStatusId(3);
         //for test orderCount set to 1
         orderEntity.setOrderCount(1);
-        //for test userID set 33
-        orderEntity.setUserID(33);
+        UserEntity userEntity = (UserEntity) request.getSession().getAttribute("currentUser");
+        if (null == userEntity) {
+            return;
+        }
+        orderEntity.setUserID(userEntity.getUserID());
 
         OrderService orderService = new OrderServiceImpl();
         final Integer result = orderService.addOrder(orderEntity);
@@ -70,6 +74,6 @@ public class AddOrderServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+        doPost(request, response);
     }
 }

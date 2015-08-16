@@ -18,6 +18,9 @@
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="/js/databuffer.js"></script>
+    <script type="text/javascript">
+        setShoppingChart();
+    </script>
     <style>
         nav.navbar i {
             width: 30px;
@@ -50,9 +53,16 @@
                 <li><a href="../PackageServlet">Package</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <button id="shopperChart" class="btn btn-primary" type="button" style="margin-top:5px">
+                        Paying the Bill
+                        <span id="numberCount" class="badge">number of food</span>
+                    </button>
+                </li>
                 <li class="dropdown">
-                    <a href="#" id="username" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                        <span class="caret"></span></a>
+                    <a href="#" id="username" class="dropdown-toggle" data-toggle="dropdown"
+                       role="button">userName<span
+                            class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="../login.jsp"><i class="glyphicon glyphicon-log-out"></i>&emsp;Logout</a></li>
                     </ul>

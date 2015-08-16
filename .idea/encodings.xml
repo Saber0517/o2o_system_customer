@@ -7,5 +7,6 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/oocl/jyhon/util/StringFormatVerifyUtil.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/oocl/jyhon/util/VerifyUtil.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/WEB-INF/lib/jstl-1.2.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/main/index.jsp" charset="UTF-8" />
   </component>
 </project>

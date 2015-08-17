@@ -21,11 +21,15 @@ public class GetUserDataServlet extends HttpServlet {
         if (null == userEntity) {
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
-            Gson gson = new Gson();
-            String userJson = gson.toJson(userEntity, UserEntity.class);
-            response.setContentType("application/json");
-            response.getOutputStream().write(userJson.getBytes());
+            sendUserEntityJson(response, userEntity);
         }
+    }
+
+    private void sendUserEntityJson(HttpServletResponse response, UserEntity userEntity) throws IOException {
+        Gson gson = new Gson();
+        String userJson = gson.toJson(userEntity, UserEntity.class);
+        response.setContentType("application/json");
+        response.getOutputStream().write(userJson.getBytes());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -32,15 +32,13 @@ public class SignInServlet extends HttpServlet {
         //将来由IOC完成
         UserEntityService userEntityService = new UserEntityServiceImpl();
 
-
         //获得表格参数
         String pathTemp = InitFileFolder();
         List<FileItem> items = getFileItems(request, pathTemp);
         UserEntity userEntity = getUserEntity(items);
 
         //验证插入信息
-        VerifyUtil verifyUtil = new VerifyUtil();
-        if (verifySignInData(request, response, userEntity, verifyUtil)) return;
+        if (isIllegalUserData(request, response, userEntity)) return;
 
         //插入数据
         Integer dbResult = userEntityService.addEntity(userEntity);
@@ -55,6 +53,12 @@ public class SignInServlet extends HttpServlet {
         request.getRequestDispatcher("login.jsp").forward(request, response);
 
 
+    }
+
+    private boolean isIllegalUserData(HttpServletRequest request, HttpServletResponse response, UserEntity userEntity) throws ServletException, IOException {
+        VerifyUtil verifyUtil = new VerifyUtil();
+        if (verifySignInData(request, response, userEntity, verifyUtil)) return true;
+        return false;
     }
 
     private boolean verifySignInData(HttpServletRequest request, HttpServletResponse response, UserEntity userEntity, VerifyUtil verifyUtil) throws ServletException, IOException {

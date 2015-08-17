@@ -21,9 +21,7 @@ public class LoginServlet extends HttpServlet {
         System.out.println("dopost");
         //请求参数接收
         UserEntity userEntity = getUserEntity(request);
-
         //将来由IOC完成
-
         UserEntityService userEntityService = new UserEntityServiceImpl();
         //类型转换
         //校验
@@ -31,20 +29,27 @@ public class LoginServlet extends HttpServlet {
         UserEntity currentUser = userEntityService.verify(userEntity);
 
         System.out.println(currentUser);
-
         if (currentUser != null) {
-            currentUser.setPassword("");
-            //传递数据
-            request.getSession().setAttribute("currentUser", currentUser);
-            //在线状态改变
-            //请求转发
-            request.getSession().setAttribute("ErrorMessage", null);
-            request.getRequestDispatcher("PanelServlet").forward(request, response);
+            forWardSuccessResult(request, response, currentUser);
         } else {
-            request.getSession().setAttribute("ErrorMessage", "name or password wrong!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            forWardLogin(request, response);
         }
 
+    }
+
+    private void forWardLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getSession().setAttribute("ErrorMessage", "name or password wrong!");
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+    }
+
+    private void forWardSuccessResult(HttpServletRequest request, HttpServletResponse response, UserEntity currentUser) throws ServletException, IOException {
+        currentUser.setPassword("");
+        //传递数据
+        request.getSession().setAttribute("currentUser", currentUser);
+        //在线状态改变
+        //请求转发
+        request.getSession().setAttribute("ErrorMessage", null);
+        request.getRequestDispatcher("PanelServlet").forward(request, response);
     }
 
     private UserEntity getUserEntity(HttpServletRequest request) {
@@ -60,6 +65,5 @@ public class LoginServlet extends HttpServlet {
         System.out.println("doget");
         doPost(request, response);
     }
-
 
 }

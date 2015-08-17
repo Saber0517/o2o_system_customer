@@ -27,38 +27,32 @@ import java.util.List;
 @WebServlet(name = "AddOrderServlet", urlPatterns = {"/AddOrderServlet"})
 public class AddOrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String json = request.getParameter("json");
+        String orderJson = request.getParameter("json");
 
-        if (null == json) {
+        if (null == orderJson) {
             return;
         }
 
+        OrderEntity orderEntity = getOrderEntity(orderJson);
 
-        List<OrderEntity> orderEntityList = (List<OrderEntity>) request.getSession().getAttribute("orderEntityList");
-        if (null == orderEntityList) {
-            orderEntityList = new LinkedList<OrderEntity>();
-        }
+        List<OrderEntity> orderEntityList = getOrderEntitieList(request);
 
-
-        Gson gson = new Gson();
-        OrderEntity orderEntity = gson.fromJson(json, OrderEntity.class);
-        //date 要以serer目前的时间为主
-        orderEntity.setDate(new Date());
-        //设置为审核状态
-        orderEntity.setStatusId(3);
-        //for test orderCount set to 1
-        orderEntity.setOrderCount(1);
         UserEntity userEntity = (UserEntity) request.getSession().getAttribute("currentUser");
         if (null == userEntity) {
             return;
         }
+        //设置当前order下单用户信息
         orderEntity.setUserID(userEntity.getUserID());
-
-        OrderService orderService = new OrderServiceImpl();
-        final Integer result = orderService.addOrder(orderEntity);
-
+        //插入DB
+        final Integer result = InsertOrderIntoDB(orderEntity);
         //发送返回结果
+        sendAddOrderResult(request, response, orderEntity, orderEntityList, result);
+
+    }
+
+    private void sendAddOrderResult(HttpServletRequest request, HttpServletResponse response, OrderEntity orderEntity, List<OrderEntity> orderEntityList, Integer result) throws IOException {
         JsonObject object = new JsonObject();
+        Gson gson = new Gson();
         if (1 < result) {
             orderEntity.setOrderId(result);
             orderEntityList.add(orderEntity);
@@ -70,7 +64,31 @@ public class AddOrderServlet extends HttpServlet {
         }
         response.setContentType("application/json");
         response.getOutputStream().write(gson.toJson(object, JsonObject.class).getBytes());
+    }
 
+    private Integer InsertOrderIntoDB(OrderEntity orderEntity) {
+        OrderService orderService = new OrderServiceImpl();
+        return orderService.addOrder(orderEntity);
+    }
+
+    private List<OrderEntity> getOrderEntitieList(HttpServletRequest request) {
+        List<OrderEntity> orderEntityList = (List<OrderEntity>) request.getSession().getAttribute("orderEntityList");
+        if (null == orderEntityList) {
+            orderEntityList = new LinkedList<OrderEntity>();
+        }
+        return orderEntityList;
+    }
+
+    private OrderEntity getOrderEntity(String orderJson) {
+        Gson gson = new Gson();
+        OrderEntity orderEntity = gson.fromJson(orderJson, OrderEntity.class);
+        //date 要以serer目前的时间为主
+        orderEntity.setDate(new Date());
+        //设置为审核状态
+        orderEntity.setStatusId(3);
+        //for test orderCount set to 1
+        orderEntity.setOrderCount(1);
+        return orderEntity;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

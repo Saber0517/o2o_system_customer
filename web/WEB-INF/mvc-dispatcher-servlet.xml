@@ -7,15 +7,26 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd" default-autowire="byType">
-    <context:component-scan base-package="com.oocl.jyhon.serviceimpl"/>
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:component-scan base-package="com.oocl.jyhon"/>
     <mvc:annotation-driven></mvc:annotation-driven>
 
     <bean class="com.oocl.jyhon.daoimple.UploadFileEntityDaoImple"></bean>
     <bean class="com.oocl.jyhon.daoimple.FoodEntityDaoImple"></bean>
     <bean class="com.oocl.jyhon.daoimple.FoodTypeEntityDaoImple"></bean>
     <bean class="com.oocl.jyhon.daoimple.OrderEntityDaoImpl"></bean>
-    <bean class="com.oocl.jyhon.daoimple.UserEntityDaoImple"></bean>
+
+
+    <bean id="userEntityDaoImple" class="com.oocl.jyhon.daoimple.UserEntityDaoImple"></bean>
+
+    <bean name="userEntityService" class="com.oocl.jyhon.serviceimpl.UserEntityServiceImpl">
+        <!--(1)依赖注入,配置当前类中相应的属性-->
+        <property name="userEntityDao" ref="userEntityDaoImple"></property>
+    </bean>
+
+    <bean id="LoginServlet" class="com.oocl.jyhon.servlet.user.LoginServlet">
+        <property name="userEntityService" ref="userEntityService"></property>
+    </bean>
 
     <bean class="com.oocl.jyhon.serviceimpl.UserEntityServiceImpl"></bean>
     <bean class="com.oocl.jyhon.serviceimpl.FoodTypeEntityServiceImpl"></bean>

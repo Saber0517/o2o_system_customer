@@ -13,28 +13,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UserEntityServiceImpl implements UserEntityService {
     //    UserEntityDao userEntityDaoImple = new UserEntityDaoImple();
 
-    static UserEntityDaoImple userEntityDao;
+    private UserEntityDao userEntityDao;
 
     public UserEntityDao getUserEntityDao() {
         return userEntityDao;
     }
 
-    public void setUserEntityDao(UserEntityDaoImple userEntityDao) {
+    public void setUserEntityDao(UserEntityDao userEntityDao) {
         this.userEntityDao = userEntityDao;
     }
 
     public int addEntity(UserEntity userEntity) {
         userEntity.setRole("customer");
         userEntity.setStatusId(2);
-        return userEntityDao.addEntity(userEntity);
+        return this.userEntityDao.addEntity(userEntity);
     }
 
     public int updateEntity(UserEntity userEntity) {
-        return userEntityDao.updateEntity(userEntity);
+        return this.userEntityDao.updateEntity(userEntity);
     }
 
     public UserEntity verify(UserEntity userEntity) {
 
-        return (UserEntity) userEntityDao.verify(userEntity);
+        return (UserEntity) this.userEntityDao.verify(userEntity);
     }
 }

@@ -17,13 +17,22 @@ import java.io.IOException;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
+    private static UserEntityService userEntityService;
+
+    public UserEntityService getUserEntityService() {
+        return userEntityService;
+    }
+
+    public void setUserEntityService(UserEntityService userEntityService) {
+        this.userEntityService = userEntityService;
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("dopost");
         //请求参数接收
         UserEntity userEntity = getUserEntity(request);
         //将来由IOC完成
-        UserEntityService userEntityService = new UserEntityServiceImpl();
+//        UserEntityService userEntityService = new UserEntityServiceImpl();
         //类型转换
         //校验
         //数据封装

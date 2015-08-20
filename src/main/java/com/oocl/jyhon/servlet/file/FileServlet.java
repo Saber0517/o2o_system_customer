@@ -21,7 +21,6 @@ public class FileServlet extends HttpServlet {
 //        InputStream inputStream = fileService.getFile(fileName);
         byte[] inputBytes = fileService.getFileByByte(fileName);
         response.getOutputStream().write(inputBytes);
-
         response.getOutputStream().flush();
         response.getOutputStream().close();
     }

@@ -28,7 +28,6 @@ public class GetOrderServlet extends HttpServlet {
         List<OrderEntity> orderEntityList = (List<OrderEntity>) request.getSession().getAttribute("orderEntityList");
         UserEntity userEntity = (UserEntity) request.getSession().getAttribute("currentUser");
 
-
         if (null == userEntity || null == userEntity.getUserID()) {
             return;
         }
@@ -39,12 +38,7 @@ public class GetOrderServlet extends HttpServlet {
 
         response.setContentType("application/json");
 
-        //获取存在购物车中的内容
-        if (null == orderEntityList || 0 == orderEntityList.size()) {
-            OrderService orderService = new OrderServiceImpl();
-            orderEntityList = orderService.findOrderByUserId(Integer.valueOf(userEntity.getUserID()));
-            request.getSession().setAttribute("orderEntityList", orderEntityList);
-        }
+        orderEntityList = getOrderEntities(request, orderEntityList, userEntity);
         //获取对应的食物的数据
         FoodEntityService foodEntityService = new FoodEntityServiceImpl();
         List<String> foodIdList = new LinkedList<String>();
@@ -53,6 +47,41 @@ public class GetOrderServlet extends HttpServlet {
         }
         List<FoodEntity> orderFoodList = foodEntityService.searchFoodEntityByFoodId(foodIdList);
 
+        Double allPrice = countAllPirce(orderEntityList, orderFoodList);
+
+        Gson gson = new Gson();
+        JsonObject jsonObject = fillJsonObject(response, orderEntityList, orderFoodList, allPrice, gson);
+        response.getOutputStream().write(gson.toJson(jsonObject, JsonObject.class).getBytes());
+
+    }
+
+    /**
+     * 获取存在购物车中的内容，并设置到session中
+     */
+    private List<OrderEntity> getOrderEntities(HttpServletRequest request, List<OrderEntity> orderEntityList, UserEntity userEntity) {
+        if (null == orderEntityList || 0 == orderEntityList.size()) {
+            OrderService orderService = new OrderServiceImpl();
+            orderEntityList = orderService.findOrderByUserId(Integer.valueOf(userEntity.getUserID()));
+            request.getSession().setAttribute("orderEntityList", orderEntityList);
+        }
+        return orderEntityList;
+    }
+
+    private JsonObject fillJsonObject(HttpServletResponse response, List<OrderEntity> orderEntityList, List<FoodEntity> orderFoodList, Double allPrice, Gson gson) {
+        JsonObject jsonObject = new JsonObject();
+        //OrderJson
+        response.setContentType("application/json");
+        String orderEntityListJson = gson.toJson(orderEntityList);
+        jsonObject.addProperty("orderEntityList", orderEntityListJson);
+        //FoodJson
+        String orderFoodListJson = gson.toJson(orderFoodList);
+        jsonObject.addProperty("orderFoodList", orderFoodListJson);
+        //all price
+        jsonObject.addProperty("allPrice", allPrice);
+        return jsonObject;
+    }
+
+    private Double countAllPirce(List<OrderEntity> orderEntityList, List<FoodEntity> orderFoodList) {
         Double allPrice = new Double(0);
         for (OrderEntity orderEntity : orderEntityList) {
             Integer foodId = orderEntity.getFoodId();
@@ -63,20 +92,7 @@ public class GetOrderServlet extends HttpServlet {
                 }
             }
         }
-
-        Gson gson = new Gson();
-        JsonObject jsonObject = new JsonObject();
-        //OrderJson
-        response.setContentType("application/json");
-        String orderEntityListJson = gson.toJson(orderEntityList);
-        jsonObject.addProperty("orderEntityList", orderEntityListJson);
-        //FoodJson
-        String orderFoodListJson = gson.toJson(orderFoodList);
-        jsonObject.addProperty("orderFoodList", orderFoodListJson);
-        //all price
-        jsonObject.addProperty("allPrice",allPrice);
-        response.getOutputStream().write(gson.toJson(jsonObject, JsonObject.class).getBytes());
-
+        return allPrice;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

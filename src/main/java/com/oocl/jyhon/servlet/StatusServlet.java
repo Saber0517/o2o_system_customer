@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.oocl.jyhon.dao.EntityDao;
 import com.oocl.jyhon.daoimple.StatusEntityDaoImple;
 import com.oocl.jyhon.entiy.StatusEntity;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

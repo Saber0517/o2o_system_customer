@@ -17,6 +17,7 @@ import java.io.IOException;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("dopost");
         //请求参数接收
@@ -34,7 +35,6 @@ public class LoginServlet extends HttpServlet {
         } else {
             forWardLogin(request, response);
         }
-
     }
 
     private void forWardLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

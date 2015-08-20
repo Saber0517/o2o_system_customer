@@ -1,5 +1,6 @@
 package com.oocl.jyhon.serviceimpl;
 
+import com.oocl.jyhon.dao.FoodEntityDao;
 import com.oocl.jyhon.daoimple.FoodEntityDaoImple;
 import com.oocl.jyhon.entiy.FoodEntity;
 import com.oocl.jyhon.service.FoodEntityService;
@@ -14,7 +15,16 @@ import java.util.Map;
  */
 public class FoodEntityServiceImpl implements FoodEntityService {
 
-    FoodEntityDaoImple foodEntityDaoImple = new FoodEntityDaoImple();
+    //    FoodEntityDaoImple foodEntityDaoImple = new FoodEntityDaoImple();
+    static FoodEntityDao foodEntityDaoImple;
+
+    public FoodEntityDao getFoodEntityDaoImple() {
+        return foodEntityDaoImple;
+    }
+
+    public void setFoodEntityDaoImple(FoodEntityDao foodEntityDaoImple) {
+        this.foodEntityDaoImple = foodEntityDaoImple;
+    }
 
     @Override
     public Map<String, String> updateFoodEntity(Integer foodId, Double price) {

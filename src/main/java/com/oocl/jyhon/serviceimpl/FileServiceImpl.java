@@ -10,7 +10,16 @@ import java.io.InputStream;
  * Created by WhiteSaber on 15/8/9.
  */
 public class FileServiceImpl implements FileService {
-    UploadFileEntityDao uploadFileService = new UploadFileEntityDaoImple();
+    static UploadFileEntityDao uploadFileService;
+
+    public UploadFileEntityDao getUploadFileService() {
+        return uploadFileService;
+    }
+
+    public void setUploadFileService(UploadFileEntityDao uploadFileService) {
+        this.uploadFileService = uploadFileService;
+    }
+    //    UploadFileEntityDao uploadFileService = new UploadFileEntityDaoImple();
 
     public InputStream getFile(String fileName) {
         return uploadFileService.getFile(fileName);

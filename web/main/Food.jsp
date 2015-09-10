@@ -85,7 +85,6 @@
                         var resultTip = "";
                         if (result == "success") {
                             resultTip = "add to chart success";
-
                         } else {
                             resultTip = "add to chart failed, please contact us.!";
                         }

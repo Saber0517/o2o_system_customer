@@ -1,8 +1,7 @@
 package springioc;
 
 
-import com.oocl.jyhon.dao.UserEntityDao;
-import com.oocl.jyhon.daoimple.UserEntityDaoImple;
+import com.jyhon.daoimple.UserEntityDaoImple;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

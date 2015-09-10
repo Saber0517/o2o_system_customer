@@ -11,26 +11,26 @@
     <context:component-scan base-package="com.oocl.jyhon"/>
     <mvc:annotation-driven></mvc:annotation-driven>
 
-    <bean class="com.oocl.jyhon.daoimple.UploadFileEntityDaoImple"></bean>
-    <bean class="com.oocl.jyhon.daoimple.FoodEntityDaoImple"></bean>
-    <bean class="com.oocl.jyhon.daoimple.FoodTypeEntityDaoImple"></bean>
-    <bean class="com.oocl.jyhon.daoimple.OrderEntityDaoImpl"></bean>
+    <bean class="com.jyhon.daoimple.UploadFileEntityDaoImple"></bean>
+    <bean class="com.jyhon.daoimple.FoodEntityDaoImple"></bean>
+    <bean class="com.jyhon.daoimple.FoodTypeEntityDaoImple"></bean>
+    <bean class="com.jyhon.daoimple.OrderEntityDaoImpl"></bean>
 
 
-    <bean id="userEntityDaoImple" class="com.oocl.jyhon.daoimple.UserEntityDaoImple"></bean>
+    <bean id="userEntityDaoImple" class="com.jyhon.daoimple.UserEntityDaoImple"></bean>
 
-    <bean name="userEntityService" class="com.oocl.jyhon.serviceimpl.UserEntityServiceImpl">
-        <!--(1)依赖注入,配置当前类中相应的属性-->
-        <property name="userEntityDao" ref="userEntityDaoImple"></property>
-    </bean>
+       <bean name="UserEntityServiceImpl" class="com.jyhon.serviceimpl.UserEntityServiceImpl">
+           <!--(1)依赖注入,配置当前类中相应的属性-->
+           <property name="userEntityDao" ref="userEntityDaoImple"></property>
+       </bean>
 
-    <bean id="LoginServlet" class="com.oocl.jyhon.servlet.user.LoginServlet">
-        <property name="userEntityService" ref="userEntityService"></property>
-    </bean>
+       <bean id="LoginServlet" class="com.jyhon.servlet.user.LoginServlet">
+           <property name="userEntityService" ref="UserEntityServiceImpl"></property>
+       </bean>
 
-    <bean class="com.oocl.jyhon.serviceimpl.UserEntityServiceImpl"></bean>
-    <bean class="com.oocl.jyhon.serviceimpl.FoodTypeEntityServiceImpl"></bean>
-    <bean class="com.oocl.jyhon.serviceimpl.FileServiceImpl"></bean>
-    <bean class="com.oocl.jyhon.serviceimpl.FoodEntityServiceImpl"></bean>
-    <bean class="com.oocl.jyhon.serviceimpl.OrderServiceImpl"></bean>
+    <!--<bean class="UserEntityServiceImpl"></bean>-->
+    <bean class="com.jyhon.serviceimpl.FoodTypeEntityServiceImpl"></bean>
+    <bean class="com.jyhon.serviceimpl.FileServiceImpl"></bean>
+    <bean class="com.jyhon.serviceimpl.FoodEntityServiceImpl"></bean>
+    <bean class="com.jyhon.serviceimpl.OrderServiceImpl"></bean>
 </beans>
